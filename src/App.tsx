@@ -1,9 +1,10 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import './App.css';
-import Login from './components/Login';
-import Register from './components/Register';
-import Confirmation from './components/Confirmation'; 
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./App.css";
+import Login from "./Components/Login";
+import Register from "./Components/Register";
+import Confirmation from "./Components/Confirmation";
+import Home from "./Components/Home";
+import Profile from "./Components/Profile";
 
 function App() {
   return (
@@ -11,7 +12,9 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/confirmation" element={<Confirmation />} /> 
+        <Route path="/confirmation" element={<Confirmation />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );
