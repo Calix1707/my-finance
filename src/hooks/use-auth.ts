@@ -1,14 +1,8 @@
 import supabase from "../supabase-client";
 
 async function login(email: string, password: string) {
-  let res = {
-    success: true,
-    code: "00",
-    message: "",
-  };
-
   try {
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -21,8 +15,14 @@ async function login(email: string, password: string) {
       };
     }
 
-    return res;
+    return {
+      success: true,
+      code: "00",
+      message: "Inicio de sesión exitoso",
+      user: data.user, 
+    };
   } catch (error) {
+    console.error("Error desconocido:", error);
     return {
       success: false,
       code: "02",

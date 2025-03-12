@@ -1,36 +1,50 @@
+
 import React, { useState, useEffect } from "react";
 import supabase from "../supabase-client";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
 import useUser from "../hooks/useUser";
+import { Transaction, User } from "../interfaces";
+import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const Home = () => {
   const navigate = useNavigate();
   const { user, balance, handleLogout } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [timeFilter, setTimeFilter] = useState("dia");
-  const [expenses, setExpenses] = useState<any[]>([]);
-  const [income, setIncome] = useState<any[]>([]);
+  const [expenses, setExpenses] = useState<Transaction[]>([]);
+  const [income, setIncome] = useState<Transaction[]>([]);
 
   useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
     fetchTransactions();
-  }, [user, timeFilter]);
+  }, [user, timeFilter, navigate]);
 
   const fetchTransactions = async () => {
     if (user) {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("transactions")
         .select("*")
         .eq("user_id", user.id)
         .eq("time_filter", timeFilter);
 
+      if (error) {
+        console.error("Error fetching transactions:", error);
+        return;
+      }
+
       if (data) {
         const expensesData = data.filter(
           (transaction) => transaction.type === "expense"
-        );
+        ) as Transaction[];
         const incomeData = data.filter(
           (transaction) => transaction.type === "income"
-        );
+        ) as Transaction[];
 
         setExpenses(expensesData);
         setIncome(incomeData);
@@ -41,6 +55,33 @@ const Home = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  const expensesChartData = {
+    labels: expenses.map((expense) => expense.category),
+    datasets: [
+      {
+        label: 'Gastos',
+        data: expenses.map((expense) => expense.amount),
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const incomeChartData = {
+    labels: income.map((income) => income.category),
+    datasets: [
+      {
+        label: 'Ingresos',
+        data: income.map((income) => income.amount),
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1,
+      },
+    ],
+  };
+  
 
   return (
     <div className="home-container">
@@ -63,7 +104,8 @@ const Home = () => {
             </svg>
           </div>
           <div className="user-info">
-            <h3>{user?.user_metadata?.full_name || "Nombre Completo"}</h3>
+          <h3>{user?.user_metadata?.full_name || "Nombre Completo"}
+          </h3>
             <p>Total: ${balance}</p>
           </div>
         </div>
@@ -102,20 +144,7 @@ const Home = () => {
           <div className="charts-container">
             <div className="chart-item">
               <h3>Gráfica de Gastos</h3>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="200"
-                height="200"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
-                <path d="M22 12A10 10 0 0 0 12 2V12Z"></path>
-              </svg>
+              <Bar data={expensesChartData} />
               <div className="expenses-details">
                 <h3>Gastos</h3>
                 <div className="category-item">
@@ -135,20 +164,7 @@ const Home = () => {
 
             <div className="chart-item">
               <h3>Gráfica de Ingresos</h3>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="200"
-                height="200"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
-                <path d="M22 12A10 10 0 0 0 12 2V12Z"></path>
-              </svg>
+              <Bar data={incomeChartData} />
               <div className="income-details">
                 <h3>Ingresos</h3>
                 <div className="category-item">
