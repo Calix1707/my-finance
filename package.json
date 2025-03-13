@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.48.1",
+    "@supabase/supabase-js": "^2.49.1",
     "@svgr/webpack": "^8.1.0",
     "chart.js": "^4.4.8",
     "react": "^19.0.0",

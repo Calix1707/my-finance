@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../hooks/use-auth";
-import { errors } from "../assets/dictory";
-import supabase, { User } from "../supabase-client";
+import { errors } from "../assets/dictionary";
+import supabase from "../supabase-client";
+import { User } from "../interfaces"; 
 import "../App.css";
 import { FaGithub } from "react-icons/fa";
 
@@ -54,7 +55,9 @@ const Login = () => {
         console.log("Iniciando handleSubmit con email:", email);
 
         try {
+            console.log("Valores antes de login:", { email, password });
             const res = await login(email, password);
+            console.error("Error en la promesa login:", error);
             console.log("Resultado de login:", res);
 
             if (!res.success) {
@@ -64,6 +67,7 @@ const Login = () => {
             }
 
             const { data: { user } } = await supabase.auth.getUser();
+            console.log("Usuario obtenido después de login:", user); 
             setUser(user);
             console.log("Inicio de sesión exitoso, navegando a /home");
             navigate("/home");

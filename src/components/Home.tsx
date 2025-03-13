@@ -19,6 +19,7 @@ const Home = () => {
   const [income, setIncome] = useState<Transaction[]>([]);
 
   useEffect(() => {
+    console.log("Estado del usuario en useEffect:", user);
     if (!user) {
       navigate('/login');
     }
