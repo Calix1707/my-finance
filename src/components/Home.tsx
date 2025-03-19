@@ -1,14 +1,28 @@
-
 import React, { useState, useEffect } from "react";
 import supabase from "../supabase-client";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
 import useUser from "../hooks/useUser";
 import { Transaction, User } from "../interfaces";
-import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const Home = () => {
   const navigate = useNavigate();
@@ -21,7 +35,7 @@ const Home = () => {
   useEffect(() => {
     console.log("Estado del usuario en useEffect:", user);
     if (!user) {
-      navigate('/login');
+      navigate("/Home");
     }
     fetchTransactions();
   }, [user, timeFilter, navigate]);
@@ -61,10 +75,10 @@ const Home = () => {
     labels: expenses.map((expense) => expense.category),
     datasets: [
       {
-        label: 'Gastos',
+        label: "Gastos",
         data: expenses.map((expense) => expense.amount),
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: "rgba(255, 99, 132, 0.2)",
+        borderColor: "rgba(255, 99, 132, 1)",
         borderWidth: 1,
       },
     ],
@@ -74,15 +88,14 @@ const Home = () => {
     labels: income.map((income) => income.category),
     datasets: [
       {
-        label: 'Ingresos',
+        label: "Ingresos",
         data: income.map((income) => income.amount),
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        borderColor: 'rgba(54, 162, 235, 1)',
+        backgroundColor: "rgba(54, 162, 235, 0.2)",
+        borderColor: "rgba(54, 162, 235, 1)",
         borderWidth: 1,
       },
     ],
   };
-  
 
   return (
     <div className="home-container">
@@ -105,8 +118,7 @@ const Home = () => {
             </svg>
           </div>
           <div className="user-info">
-          <h3>{user?.user_metadata?.full_name || "Nombre Completo"}
-          </h3>
+            <h3>{user?.user_metadata?.full_name || "Nombre Completo"}</h3>
             <p>Total: ${balance}</p>
           </div>
         </div>
