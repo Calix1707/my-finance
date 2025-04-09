@@ -1,0 +1,193 @@
+.profileContainer {
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  margin-left: 680px;
+  margin-top: 50px;
+}
+
+.backButton {
+  align-self: flex-start;
+  padding: 10px 15px;
+  font-size: 1em;
+  border-radius: 6px;
+  cursor: pointer;
+  transition-duration: 0.3s;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.backButton:hover {
+  background-color: #e9e9e9;
+  color: #000;
+}
+
+.profileCard {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 8px rgba(206, 202, 1, 0.1);
+  width: 400px;
+  max-width: 90%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 25px;
+  align-items: start;
+}
+
+.errorMessage {
+  color: #e74c3c;
+  margin-bottom: 10px;
+  font-weight: bold;
+  text-align: center;
+  grid-column: 1;
+}
+
+.profilePictureContainer {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto;
+  grid-column: 1;
+}
+
+.profilePictureContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profilePictureContainer input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  grid-column: 1;
+}
+
+.formLabel {
+  font-size: 0.9em;
+  color: #555;
+}
+
+.formInput {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1em;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.passwordContainer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.passwordButton {
+  padding: 10px 15px;
+  font-size: 0.9em;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.passwordButton:hover {
+  background-color: #e9e9e9;
+}
+
+.profileIcons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+  grid-column: 1;
+}
+
+.profileIcons img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+}
+
+.profileIcons img:hover,
+.profileIcons img.selected {
+  border-color: #065279;
+}
+
+.saveButton {
+  padding: 12px 20px;
+  font-size: 1em;
+  border: none;
+  border-radius: 6px;
+  background-color: #065279;
+  color: white;
+  cursor: pointer;
+  transition-duration: 0.3s;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 20px;
+  grid-column: 1;
+}
+
+.saveButton:hover {
+  background-color: #043a54;
+}
+
+.profilePictureContainer {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto;
+  grid-column: 1;
+  cursor: pointer;
+  position: relative;
+}
+
+.profilePictureContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profilePictureContainer input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}

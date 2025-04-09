@@ -13,6 +13,7 @@
     "@supabase/supabase-js": "^2.49.1",
     "@svgr/webpack": "^8.1.0",
     "chart.js": "^4.4.8",
+    "date-fns": "^4.1.0",
     "react": "^19.0.0",
     "react-chartjs-2": "^5.3.0",
     "react-components": "^0.5.1",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
+    "@types/date-fns": "^2.5.3",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "@vitejs/plugin-react-swc": "^3.5.0",

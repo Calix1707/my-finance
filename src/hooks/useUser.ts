@@ -1,76 +1,86 @@
 import { useState, useEffect } from "react";
 import supabase from "../supabase-client";
-
-interface User {
-  id: string;
-  email?: string; 
-  profile_picture?: string; 
-  user_metadata?: {
-    full_name?: string; 
-  };
-  last_sign_in_at?: string; 
-}
-
-interface UserData {
-  balance: number;
-}
-
-const initialBalance: UserData = { balance: 0 };
+import { User } from "../interfaces";
+import { useAuth } from "../contexts/AuthContext";
 
 const useUser = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const { user } = useAuth();
   const [balance, setBalance] = useState<number>(0);
+  const [profilePicture, setProfilePicture] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const fetchAdditionalUserData = async (currentUser: User | null) => {
+    if (currentUser) {
+      setLoading(true);
+      const { data: userData, error: userError } = await supabase
+        .from("user")
+        .select("profile_picture")
+        .eq("id", currentUser.id)
+        .single();
+
+      if (userError) {
+        console.error("Error fetching user profile data:", userError);
+      } else {
+        setProfilePicture(userData?.profile_picture || "");
+      }
+
+      const { data: accountsData, error: accountsError } = await supabase
+        .from("account")
+        .select("balance")
+        .eq("user_id", currentUser.id);
+
+      if (accountsError) {
+        console.error("Error fetching accounts balance:", accountsError);
+      } else if (accountsData) {
+        const total = accountsData.reduce(
+          (sum, account) => sum + account.balance,
+          0
+        );
+        setBalance(total);
+      }
+      setLoading(false);
+    } else {
+      setBalance(0);
+      setProfilePicture("");
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    fetchUserData();
-  }, []);
+    fetchAdditionalUserData(user);
+  }, [user]);
 
-  const fetchUserData = async () => {
-    try {
-      const { data: { user: supabaseUser } } = await supabase.auth.getUser();
-      setUser(supabaseUser);
+  const refetchBalance = async () => {
+    if (user) {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("account")
+        .select("balance")
+        .eq("user_id", user.id);
 
-      if (supabaseUser) {
-        const { data: userData, error } = await supabase
-          .from("user")
-          .select("balance") 
-          .eq("id", supabaseUser.id)
-          .single();
-
-        if (error) throw error;
-        setBalance(userData?.balance || 0);
+      if (error) {
+        console.error("Error refetching accounts balance:", error);
+      } else if (data) {
+        const total = data.reduce((sum, account) => sum + account.balance, 0);
+        setBalance(total);
       }
-    } catch (error) {
-      console.error("Error al recuperar los datos del usuario:", error);
+      setLoading(false);
     }
   };
+
+  const { logout: contextLogout } = useAuth();
 
   const handleLogout = async () => {
-    try {
-      await supabase.auth.signOut();
-    } catch (error) {
-      console.error("Error al cerrar sesión:", error);
-    }
-  };
-
-  const updateProfilePicture = async (profilePicture: string) => {
-    if (user) {
-      try {
-        await supabase
-          .from("user")
-          .update({ profile_picture: profilePicture })
-          .eq("id", user.id);
-      } catch (error) {
-        console.error("Error al actualizar la imagen de perfil:", error);
-      }
-    }
+    await contextLogout();
   };
 
   return {
     user,
     balance,
+    profilePicture,
     handleLogout,
-    updateProfilePicture,
+    refetchBalance,
+    loading,
   };
 };
 

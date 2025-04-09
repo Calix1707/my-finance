@@ -1,53 +1,70 @@
 import supabase from "../supabase-client";
+import { User } from "../interfaces";
+import { useState, useEffect } from "react";
 
-async function login(email: string, password: string) {
-  console.log("Función login llamada con:", { email, password });
+async function login(
+  email: string,
+  password: string
+): Promise<{ success: boolean; code: string; message: string; user?: User }> {
   try {
-    const { data, error } = await supabase.auth
-      .signInWithPassword({
-        email,
-        password,
-      })
-      .catch((error) => {
-        console.error("Error en supabase.auth.signInWithPassword:", error);
-        return { data: null, error: error };
-      })
-      .finally(() => {
-        console.log("signInWithPassword finally ejecutado");
-      });
-
-    console.log("Resultado de signInWithPassword:", { data, error });
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
     if (error) {
-      return {
-        success: false,
-        code: "01",
-        message: error.message,
-      };
+      if (typeof error.code === "string") {
+        return { success: false, code: error.code, message: error.message };
+      } else {
+        return {
+          success: false,
+          code: "UNKNOWN_ERROR",
+          message: error.message,
+        };
+      }
     }
 
-    if (data && data.user) {
-      return {
-        success: true,
-        code: "00",
-        message: "Inicio de sesión exitoso",
-        user: data.user,
-      };
-    } else {
-      return {
-        success: false,
-        code: "03",
-        message: "Error al obtener los datos del usuario.",
-      };
-    }
-  } catch (error) {
-    console.error("Error desconocido:", error);
     return {
-      success: false,
-      code: "02",
-      message: "Error desconocido",
+      success: true,
+      code: "00",
+      message: "Inicio de sesión exitoso",
+      user: data.user,
     };
+  } catch (error) {
+    console.error("Error en login:", error);
+    return { success: false, code: "99", message: "Error inesperado" };
   }
 }
 
-export { login };
+const useAuth = () => {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      setLoading(true);
+      const {
+        data: { user: supabaseUser },
+      } = await supabase.auth.getUser();
+      console.log("useAuth - Usuario obtenido de Supabase:", supabaseUser);
+      console.log("useAuth - Actualizando estado del usuario:", supabaseUser);
+      setUser(supabaseUser);
+      console.log("useAuth - Estado del usuario:", supabaseUser);
+      setLoading(false);
+    };
+
+    fetchUser();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("useAuth - Evento onAuthStateChange:", event, session);
+    });
+
+    return () => subscription?.unsubscribe();
+  }, []);
+
+  return { user, loading, setUser };
+};
+
+export { login, useAuth };

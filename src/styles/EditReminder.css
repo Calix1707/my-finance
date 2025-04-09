@@ -1,0 +1,138 @@
+.form-container {
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f4f4f4;
+  margin-left: 800px;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 30px;
+}
+
+.header-container button {
+  padding: 10px 15px;
+  font-size: 1em;
+  border-radius: 6px;
+  cursor: pointer;
+  transition-duration: 0.3s;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+
+.header-container button:hover {
+  background-color: #e0e0e0;
+  color: black;
+}
+
+.header-container h2 {
+  font-size: 2.2em;
+  color: #333;
+  margin: 0;
+}
+
+.reminder-form {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 8px rgba(0, 176, 199, 0.1);
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 1.1em;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="time"],
+.form-group input[type="checkbox"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.form-group input[type="checkbox"] {
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  align-self: flex-start;
+  margin-top: 5px;
+}
+
+.form-group label[for="is_active"] {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.save-button {
+  padding: 10px 15px;
+  font-size: 1em;
+  border: none;
+  border-radius: 5px;
+  background-color: #2980b9;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.save-button:hover {
+  background-color: #1c648c;
+}
+
+.error-message {
+  color: #e74c3c;
+  margin-bottom: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  font-size: 1.2em;
+  color: #777;
+}
+
+.not-found-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  font-size: 1.1em;
+  color: #999;
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    padding: 10px;
+  }
+
+  .header-container,
+  .reminder-form {
+    width: 100%;
+  }
+}

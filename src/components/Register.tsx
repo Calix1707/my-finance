@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import supabase from "../supabase-client";
+import "../styles/App.css";
+import "../styles/Register.css";
 
 const Register = () => {
   const [full_name, setFullname] = useState("");
@@ -64,90 +66,94 @@ const Register = () => {
     }
   };
 
+  const handleConfirmationAccept = () => {
+    setShowConfirmationAlert(false);
+    navigate("/login");
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="register-form">
-      <div className="input-group">
-        <label htmlFor="fullname">Nombre completo:</label>
-        <input
-          type="text"
-          id="fullname"
-          name="fullname"
-          value={full_name}
-          onChange={(e) => setFullname(e.target.value)}
-          required
-        />
-      </div>
-
-      <div className="input-group">
-        <label htmlFor="email">Correo electrónico:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </div>
-
-      <div className="input-group">
-        <label htmlFor="password">Contraseña:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-
-      <div className="input-group">
-        <label htmlFor="confirmPassword">Confirmar contraseña:</label>
-        <input
-          type="password"
-          id="confirmPassword"
-          name="confirmPassword"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
-      </div>
-
-      <div className="input-group">
-        <label htmlFor="currency">Moneda de cuenta principal:</label>
-        <select
-          id="currency"
-          name="currency"
-          value={currency}
-          onChange={(e) => setCurrency(e.target.value)}
-          required
-        >
-          <option value="USD">USD</option>
-          <option value="BS">BS</option>
-        </select>
-      </div>
-
-      <div className="button-group">
-        <button type="submit">Registrar</button>
-        <button type="button" onClick={() => navigate("/login")}>
-          Cancelar
-        </button>
-      </div>
-
-      {error && <p className="error-message">{error}</p>}
-
-      {showConfirmationAlert && (
-        <div>
-          {showConfirmationAlert && (
-            <div className="confirmation-alert">
-              <p>¡Registro exitoso!</p>
-              <button>Aceptar</button>
-            </div>
-          )}
+    <div className="register-page">
+      {" "}
+      <form onSubmit={handleSubmit} className="register-form">
+        <div className="input-group">
+          <label htmlFor="fullname">Nombre completo:</label>
+          <input
+            type="text"
+            id="fullname"
+            name="fullname"
+            value={full_name}
+            onChange={(e) => setFullname(e.target.value)}
+            required
+          />
         </div>
-      )}
-    </form>
+
+        <div className="input-group">
+          <label htmlFor="email">Correo electrónico:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="input-group">
+          <label htmlFor="password">Contraseña:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="input-group">
+          <label htmlFor="confirmPassword">Confirmar contraseña:</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="input-group">
+          <label htmlFor="currency">Moneda de cuenta principal:</label>
+          <select
+            id="currency"
+            name="currency"
+            value={currency}
+            onChange={(e) => setCurrency(e.target.value)}
+            required
+          >
+            <option value="USD">USD</option>
+            <option value="BS">BS</option>
+          </select>
+        </div>
+
+        <div className="button-group">
+          <button type="submit">Registrar</button>
+          <button type="button" onClick={() => navigate("/login")}>
+            Cancelar
+          </button>
+        </div>
+
+        {error && <p className="error-message">{error}</p>}
+
+        {showConfirmationAlert && (
+          <div className="confirmation-alert">
+            <p>¡Registro exitoso! Por favor verifica tu correo electrónico.</p>
+            <button onClick={handleConfirmationAccept}>Aceptar</button>
+          </div>
+        )}
+      </form>
+    </div>
   );
 };
 

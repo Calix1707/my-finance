@@ -1,0 +1,104 @@
+.login-page {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  margin-left: 770px;
+}
+
+.login-form {
+  background-color: rgb(255, 255, 255);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 120%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.login-form h2 {
+  text-align: center;
+  font-size: 1.8em;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.login-form .error-message {
+  color: #e74c3c;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #e74c3c;
+  border-radius: 5px;
+  background-color: #fdecea;
+  text-align: center;
+}
+
+.login-form input[type="email"],
+.login-form input[type="password"] {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.login-form button {
+  padding: 12px 20px;
+  font-size: 1em;
+  border: none;
+  border-radius: 5px;
+  background-color: #065279;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-form button:hover {
+  background-color: #043a54;
+}
+
+.login-form button[type="button"] {
+  background-color: #333;
+}
+
+.login-form button[type="button"]:hover {
+  background-color: #222;
+}
+
+.login-form p {
+  font-size: 1em;
+  color: #777;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.login-form p a {
+  color: #065279;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-form p a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .login-form {
+    padding: 20px;
+    gap: 15px;
+  }
+
+  .login-form h2 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+  }
+
+  .login-form input[type="email"],
+  .login-form input[type="password"],
+  .login-form button {
+    padding: 10px;
+    font-size: 0.9em;
+  }
+}

@@ -1,0 +1,88 @@
+.historyContainer {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  margin-left: 685px;
+}
+
+.historyTitle {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.error {
+  color: #e74c3c;
+  margin-bottom: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.filterButtons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filterButtons button {
+  padding: 10px 15px;
+  font-size: 1em;
+  border: none;
+  border-radius: 6px;
+  background-color: #065279;
+  color: white;
+  cursor: pointer;
+  transition-duration: 0.3s;
+}
+
+.filterButtons button:hover {
+  background-color: #043a54;
+}
+
+.transactionsList {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.transactionsList li {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1em;
+}
+
+.transactionsList li:last-child {
+  border-bottom: none;
+}
+
+.noTransactions {
+  font-style: italic;
+  color: #777;
+}
+
+.backButton {
+  padding: 10px 15px;
+  font-size: 1em;
+  border-radius: 6px;
+  cursor: pointer;
+  transition-duration: 0.3s;
+  color: #333;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  margin-top: 20px;
+}
+
+.backButton:hover {
+  background-color: #e9e9e9;
+  color: #000;
+}
